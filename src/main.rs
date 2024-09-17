@@ -8,7 +8,6 @@ fn main() -> io::Result<()> {
     // Get the command-line arguments
     let args: Vec<String> = env::args().collect();
 
-    // Check if a flag was provided
     if args.len() < 2 {
         eprintln!("Usage: ccwc <flag> [filename]");
         std::process::exit(1);
@@ -17,7 +16,6 @@ fn main() -> io::Result<()> {
     // Parse the flag
     let flag = &args[1];
     let input: Box<dyn Read> = if args.len() == 3 {
-        // Filename provided
         let filename = &args[2];
         let file = File::open(filename)?;
         Box::new(BufReader::new(file)) as Box<dyn Read>

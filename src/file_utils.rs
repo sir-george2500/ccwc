@@ -21,7 +21,6 @@ pub fn count_words<R: Read>(reader: R) -> io::Result<usize> {
 
     for line in reader.lines() {
         let line = line?;
-        // Split the line by whitespace and count words
         word_count += line.split_whitespace().count();
     }
 

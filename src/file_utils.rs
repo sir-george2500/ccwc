@@ -1,22 +1,22 @@
-use std::fs::File;
-use std::io::{self, BufRead, BufReader, Read};
+use std::io::{self, BufRead, Read};
 
-/// Count the number of bytes in a file.
-pub fn count_bytes(mut file: File) -> io::Result<usize> {
+/// Count the number of bytes from a `Read` trait object.
+pub fn count_bytes<R: Read>(mut reader: R) -> io::Result<usize> {
     let mut buffer = Vec::new();
-    file.read_to_end(&mut buffer)?;
+    reader.read_to_end(&mut buffer)?;
     Ok(buffer.len())
 }
 
-/// Count the number of lines in a file.
-pub fn count_lines(file: File) -> io::Result<usize> {
-    let reader = BufReader::new(file);
+/// Count the number of lines from a `Read` trait object.
+pub fn count_lines<R: Read>(reader: R) -> io::Result<usize> {
+    let reader = io::BufReader::new(reader);
     let line_count = reader.lines().count();
     Ok(line_count)
 }
 
-pub fn count_words(file: File) -> io::Result<usize> {
-    let reader = BufReader::new(file);
+/// Count the number of words from a `Read` trait object.
+pub fn count_words<R: Read>(reader: R) -> io::Result<usize> {
+    let reader = io::BufReader::new(reader);
     let mut word_count = 0;
 
     for line in reader.lines() {
@@ -28,24 +28,25 @@ pub fn count_words(file: File) -> io::Result<usize> {
     Ok(word_count)
 }
 
-pub fn count_chars(mut file: File) -> io::Result<usize> {
+/// Count the number of characters from a `Read` trait object.
+pub fn count_chars<R: Read>(mut reader: R) -> io::Result<usize> {
     let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
+    reader.read_to_string(&mut contents)?;
 
     Ok(contents.chars().count())
 }
 
-/// Count the number of lines in the content.
+/// Count the number of lines in the content string.
 pub fn count_lines_1(content: &str) -> io::Result<usize> {
     Ok(content.lines().count())
 }
 
-/// Count the number of words in the content.
+/// Count the number of words in the content string.
 pub fn count_words_1(content: &str) -> io::Result<usize> {
     Ok(content.split_whitespace().count())
 }
 
-/// Count the number of bytes in the content.
+/// Count the number of bytes in the content string.
 pub fn count_bytes_1(content: &str) -> io::Result<usize> {
     Ok(content.as_bytes().len())
 }

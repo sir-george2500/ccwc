@@ -8,7 +8,7 @@
 
 ## Author
 
-- **Name**: Sir-George S Mulbah
+- **Name**: delta-x
 
 ## Features
 
